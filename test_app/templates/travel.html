@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+<title>{% block titulo %} - Travel add{% endblock %}</title>
+{% block js %}
+{% if messages %}
+{% for message in messages %}
+toastr["{{message.tags }}"]("{{message}}");
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block menu %}
+<li class="nav-item">
+    <div class="mt-2 text-light"><i class="fas fa-user fa-lg"></i> {{request.session.usuario.username}}</div>
+</li>
+<li class="nav-item"><a class="nav-link" href="/travels"> | Home </a></li>
+<li class="nav-item"><a class="nav-link" href="/logout">| Logout</a></li>
+{% endblock %}
+{% block content %}
+<div class="container col-xl-10 col-xxl-10 px-4 py-2">
+    <form action="/travel_save" method="post">
+        {% csrf_token %}
+    <!-- FILA  DE CONTENIDOS VIAJES PROGRAMADOS USUARIO -->
+    <div class="row">
+        <div class="bg-primary text-light  p-3 mb-2">
+            <h5>Agrega tu viaje</h5>
+        </div>
+        <!-- TABLA DE FORMULARIO INGRESO DE VIAJE -->
+        <div class="row mt-2">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="destination" placeholder="Destination" name="destination" value="{{request.session.this_destination}}">
+                <label for="destination" class="ms-2">Destino</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="description" placeholder="Description" name="description" value="{{request.session.this_description}}">
+                <label for="description" class="ms-2" >Descripción</label>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="travel_date_from" name="travel_date_from" value="{{request.session.this_travel_date_from}}">
+                    <label for="travel_date_from" class="ms-2">Fecha inicio viaje</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="travel_date_to" name="travel_date_to" value="{{request.session.this_travel_date_to}}">
+                    <label for="travel_date_to" class="ms-2">Fecha término viaje</label>
+                </div>
+            </div>
+        </div>
+        <!-- FIN DE FORMULARIO DE FORMULARIO INGRESO DE VIAJE -->
+        <div class="border-bottom mb-2"></div>
+    </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+            <input type="hidden" name="id_user" value="{{request.session.usuario.id}}">
+            <button class="btn btn-primary me-md-2" type="submit">Guardar su viaje {{request.session.usuario.id}}</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

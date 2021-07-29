@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+<title>{% block titulo %} - Travel add{% endblock %}</title>
+{% block js %}
+{% if messages %}
+{% for message in messages %}
+toastr["{{message.tags }}"]("{{message}}");
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block menu %}
+<li class="nav-item">
+    <div class="mt-2 text-light"><i class="fas fa-user fa-lg"></i> {{request.session.usuario.username}}</div>
+</li>
+<li class="nav-item"><a class="nav-link" href="/travels"> | Home </a></li>
+<li class="nav-item"><a class="nav-link" href="/logout">| Logout</a></li>
+{% endblock %}
+{% block content %}
+<div class="container col-xl-10 col-xxl-10 px-4 py-2">
+    <!-- FILA  DE CONTENIDO VIAJE A MOSTRAR -->
+    <div class="row-md-12">
+        <div class="bg-primary text-light  p-3 mb-2 text-center">
+            <h4>Información del viaje</h4>
+        </div>
+        <!-- TABLA DE FORMULARIO DATOS DE VIAJE -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-light text-center">
+                        <h4>Plan de viaje</h4>
+                        <h4>{{travel_show_data.destination}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text mt-1">Planificado por : {{travel_show_user.username}}</p>
+                        <p class="card-text">Descripción : {{travel_show_data.description }}</p>
+                        <p class="card-text">Fecha inicio viaje : {{travel_show_data.travel_date_from}} </p>
+                        <p class="card-text mb-1">Fecha término viaje : {{travel_show_data.travel_date_to}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-light text-center">
+                        <h4>Otros usuarios que</h4>
+                        <h4>unieron a este viaje</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for travelers in this_travelers %}
+                            <li class="list-group-item">{{travelers.name}}</li>
+                            {% empty %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Sin registros</li>
+                        </ul>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-bottom mb-2 mt-4"></div>
+    </div>
+</div>
+{% endblock %}

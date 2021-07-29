@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %} - Home {% endblock %}
+{% block js %}
+{% if messages %}
+{% for message in messages %}
+toastr["{{message.tags }}"]("{{message}}");
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<!-- Sección de MARCO HERO CENTRADO -->
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+  <div class="row align-items-center g-lg-5 py-5">
+    <div class="col-lg-7 text-center text-lg-start">
+      <div>
+        <img class="d-block mx-auto mb-4" src="{% static 'images/logo.svg' %}" alt="" width="140" height="145">
+        <div class="display-6 fw-bold lh-1 mb-3">Bienvenidos a nuestra página</div>
+        <div class="display-4 fw-bold lh-1 mb-3 text-primary">Web Page Name</div>
+      </div>
+      <p class="col-lg-10 fs-4">Texto de presentación "fancy" para la página</p>
+    </div>
+    <div class="col-md-10 mx-auto col-lg-5">
+      <div class="p-4 p-md-5 border rounded-3 bg-light shadow">
+        <form action="/login" method="post">
+          {% csrf_token %}
+          <div class="form-floating mb-3">
+            <input type="username" class="form-control" id="username" placeholder="Username" name="username">
+            <label for="username">Username</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="">
+            <label for="password">Password</label>
+          </div>
+          <button class="w-100 btn btn btn-primary text-light" type="submit">Ingresar</button>
+        </form>
+        <a href="/register" class="w-100 btn btn btn-primary mt-2 text-light" type="submit">Registrarse</a>
+        <hr class="my-4">
+        <small class="text-muted">Al hacer clic en Registrarse, usted acepta las condiciones de uso.</small>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin Sección MARCO HERO CENTRADO -->
+{% include 'footer.html' %}
+{% endblock %}

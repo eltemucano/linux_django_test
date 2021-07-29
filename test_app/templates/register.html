@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+<title>{% block titulo %} - Register{% endblock %}</title>
+{% block js %}
+{% if messages %}
+{% for message in messages %}
+toastr["{{message.tags }}"]("{{message}}");
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block menu %}
+<!-- <li class="nav-item"><a class="nav-link" href="#"></a></li> -->
+<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+{% endblock %}
+{% block content %}
+<div class="container col-xl-10 col-xxl-8 px-4 py-2">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-light text-center">
+      <h4>Formulario de registro</h4>
+    </div>
+    <div class="card-body">
+      <!-- COMIENZO FORMULARIO ENTRADA DE DATOS -->
+      <form action="/register" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="name" name="name" value="{{request.session.registro_name}}">
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username"
+            value="{{request.session.registro_username}}">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <div class="mb-3">
+          <label for="password_confirm" class="form-label">Password confirm</label>
+          <input type="password" class="form-control" id="password_confirm" name="password_confirm">
+        </div>
+        <button type="submit" class="btn btn-primary text-light">Registrarse</button>
+      </form>
+      <!-- FIN FORMULARIO ENTRADA DE DATOS -->
+    </div>
+  </div>
+</div>
+{% endblock %}
